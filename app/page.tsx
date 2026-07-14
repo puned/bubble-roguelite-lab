@@ -61,7 +61,10 @@ import {
   createBattleTelemetry,
   createEnemyCombatState,
   finishBattleTelemetry,
+  formatEnemyDisplayValue,
   getActiveBossPhaseConfig,
+  getEnemyDisplayDamage,
+  getEnemyDisplayDurability,
   getEnemyHpConfig,
   getIntentInterval,
   getIntentPreview,
@@ -1447,6 +1450,7 @@ export default function Home() {
   const [combatDebug, setCombatDebug] = useState({ elapsedSec: 0, totalDamage: 0, pressureTriggerCount: 0, overflowCount: 0, playerDamageTaken: 0 });
 
   const enemyHp = enemyState.hp;
+  const enemyDisplayDurability = getEnemyDisplayDurability(enemyState);
   const activeRoute = getRouteById(activeRouteId);
   const routeOptions = useMemo(() => getRouteCardsByIds(routeFlow.pendingRouteOptions), [routeFlow.pendingRouteOptions]);
   const focusedRoute = routeOptions.find((route) => route.routeId === focusedRouteId);
@@ -2360,6 +2364,8 @@ export default function Home() {
     let phaseTransitionTo = enemyDamage.toPhase;
     if (mirrorCleared) nextEnemyState = { ...nextEnemyState, vulnerableShots: Math.max(1, nextEnemyState.vulnerableShots) };
     const damage = enemyDamage.actualDamage;
+    const displayDamage = getEnemyDisplayDamage(enemyState, damage);
+    const displayShieldDamage = getEnemyDisplayDamage(enemyState, enemyDamage.shieldDamage);
     let nextEnemyHp = nextEnemyState.hp;
     const nextShot = shotCount + 1;
     let nextPhase = nextEnemyState.phaseIndex + 1;
@@ -2422,6 +2428,7 @@ export default function Home() {
         enemyId: enemyState.enemyId,
         sourceType,
         rawDamage: rawDamageBySource[sourceType as keyof typeof rawDamageBySource],
+        displayDamage: getEnemyDisplayDamage(enemyState, value),
         shieldDamage: sourceShieldDamage,
         hpDamage: value - sourceShieldDamage,
         shotIndex: nextShot,
@@ -2436,7 +2443,7 @@ export default function Home() {
       emitCoreEvent("boss_phase_changed", { sourceId: nextEnemyState.enemyId, targetId: `PHASE_${enemyDamage.toPhase}`, shotTransactionId, effectValue: enemyDamage.carryDamage, result: "CHANGED" });
     }
     let note = matched
-      ? `消除 ${cleared.length} · 掉落 ${dropped.length} · 对${level.name}造成 ${damage} 伤害${enemyDamage.shieldDamage ? `（护盾 ${enemyDamage.shieldDamage}）` : ""}`
+      ? `消除 ${cleared.length} · 掉落 ${dropped.length} · 对${level.name}造成 ${formatEnemyDisplayValue(displayDamage)} 伤害${enemyDamage.shieldDamage ? `（护盾 ${formatEnemyDisplayValue(displayShieldDamage)}）` : ""}`
       : "没有形成消除，保底抽球权重已提升";
     if (enemyDamage.phaseChanged) note = `${note}｜阶段锁触发，溢出伤害仅继承 ${enemyDamage.carryDamage}`;
     if (phaseShotGrant > 0) note = `${note}｜阶段突破，发射次数 +${phaseShotGrant}`;
@@ -3271,10 +3278,10 @@ export default function Home() {
           <div className="hp-track">
             <i style={{ width: `${(enemyHp / enemyState.maxHp) * 100}%` }} />
             {enemyState.nodeType === "BOSS" && <><b className="phase-marker marker-one" /><b className="phase-marker marker-two" /></>}
-            <strong>{enemyHp} / {enemyState.maxHp}</strong>
+            <strong>{formatEnemyDisplayValue(enemyDisplayDurability.hp)} / {formatEnemyDisplayValue(enemyDisplayDurability.maxHp)}</strong>
           </div>
           {enemyState.maxShield > 0 && (
-            <div className="enemy-shield-track"><i style={{ width: `${(enemyState.shield / enemyState.maxShield) * 100}%` }} /><strong>敌方护盾 {enemyState.shield} / {enemyState.maxShield}</strong></div>
+            <div className="enemy-shield-track"><i style={{ width: `${(enemyState.shield / enemyState.maxShield) * 100}%` }} /><strong>敌方护盾 {formatEnemyDisplayValue(enemyDisplayDurability.shield)} / {formatEnemyDisplayValue(enemyDisplayDurability.maxShield)}</strong></div>
           )}
           <div className="battle-stats">
             <div><small>剩余发射</small><strong>{shotBudget.remainingShots}</strong></div>
@@ -3419,8 +3426,9 @@ export default function Home() {
                 <option value="v1">v1 优化</option><option value="legacy">legacy 旧版</option>
               </select>
             </label>
-            <div><span>旧版 → 当前最大 HP</span><strong>{enemyConfig.legacyHp} → {enemyState.maxHp}</strong></div>
-            <div><span>敌人 HP</span><strong>{enemyState.hp}/{enemyState.maxHp}</strong></div>
+            <div><span>旧版 → 当前显示 HP</span><strong>{enemyConfig.legacyHp} → {formatEnemyDisplayValue(enemyDisplayDurability.maxHp)}</strong></div>
+            <div><span>敌人显示 HP</span><strong>{formatEnemyDisplayValue(enemyDisplayDurability.hp)}/{formatEnemyDisplayValue(enemyDisplayDurability.maxHp)}</strong></div>
+            <div><span>内部耐久</span><strong>{enemyState.hp}/{enemyState.maxHp}</strong></div>
             <div><span>敌人护盾</span><strong>{enemyState.shield}/{enemyState.maxShield}</strong></div>
             <div><span>阶段</span><strong>{phase}</strong></div>
             <div><span>战斗时长</span><strong>{combatDebug.elapsedSec.toFixed(1)}s</strong></div>

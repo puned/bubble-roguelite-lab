@@ -6,15 +6,15 @@
     "BOSS": { "preBattleBonusCap": 6, "runtimeGrantCap": 8, "lowWarningThresholds": [8, 4, 1], "continueShots": 10 }
   },
   "levels": [
-    { "levelId": "CH1_01", "nodeType": "NORMAL", "targetShotsMin": 12, "targetShotsMax": 13, "baseShotLimit": 18 },
-    { "levelId": "CH1_02", "nodeType": "NORMAL", "targetShotsMin": 13, "targetShotsMax": 14, "baseShotLimit": 19 },
-    { "levelId": "CH1_03", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 15, "baseShotLimit": 20 },
-    { "levelId": "CH1_04", "nodeType": "NORMAL", "targetShotsMin": 15, "targetShotsMax": 16, "baseShotLimit": 21 },
+    { "levelId": "CH1_01", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 18 },
+    { "levelId": "CH1_02", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 19 },
+    { "levelId": "CH1_03", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 20 },
+    { "levelId": "CH1_04", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 21 },
     { "levelId": "CH1_05", "nodeType": "ELITE", "targetShotsMin": 23, "targetShotsMax": 25, "baseShotLimit": 32 },
-    { "levelId": "CH1_06", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 15, "baseShotLimit": 22 },
-    { "levelId": "CH1_07", "nodeType": "NORMAL", "targetShotsMin": 15, "targetShotsMax": 16, "baseShotLimit": 23 },
-    { "levelId": "CH1_08", "nodeType": "NORMAL", "targetShotsMin": 16, "targetShotsMax": 17, "baseShotLimit": 24 },
-    { "levelId": "CH1_09", "nodeType": "NORMAL", "targetShotsMin": 17, "targetShotsMax": 18, "baseShotLimit": 25 },
+    { "levelId": "CH1_06", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 22 },
+    { "levelId": "CH1_07", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 23 },
+    { "levelId": "CH1_08", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 24 },
+    { "levelId": "CH1_09", "nodeType": "NORMAL", "targetShotsMin": 14, "targetShotsMax": 16, "baseShotLimit": 25 },
     {
       "levelId": "CH1_10", "nodeType": "BOSS", "targetShotsMin": 43, "targetShotsMax": 47, "baseShotLimit": 52,
       "bossPhaseGrants": [

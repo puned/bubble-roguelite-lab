@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
   analyzeCombatPacing,
@@ -6,6 +7,8 @@ import {
   createBattleTelemetry,
   createEnemyCombatState,
   finishBattleTelemetry,
+  getEnemyDisplayDamage,
+  getEnemyDisplayDurability,
   getEnemyHpConfig,
   getIntentPreview,
   getIntentInterval,
@@ -15,12 +18,14 @@ import {
   validateCombatConfigs,
   type CombatTelemetrySnapshot,
 } from "../app/combat-pacing.ts";
+import { projectCompleteLevelDateLayout, parseLevelDateLayout } from "../app/initial-board-layout.ts";
+import { chapterLevels } from "../app/levels.ts";
 
 const hit = (levelId: string, damage: number, sourceType: "MATCH_CLEAR" | "BUBBLE_DROP" | "SPECIAL_BALL" = "MATCH_CLEAR") =>
   resolveEnemyShotDamage(createEnemyCombatState(levelId), { components: [{ sourceType, rawDamage: damage }] });
 
 test("第一章十关 v1 血量与护盾符合任务书", () => {
-  const expected = [[100, 0], [115, 0], [130, 0], [145, 15], [240, 50], [170, 0], [190, 10], [215, 15], [240, 20], [720, 60]];
+  const expected = [[90, 0], [115, 0], [120, 0], [135, 15], [240, 50], [135, 0], [130, 10], [160, 15], [120, 20], [720, 60]];
   expected.forEach(([hp, shield], index) => {
     const config = getEnemyHpConfig(`CH1_${String(index + 1).padStart(2, "0")}`);
     assert.deepEqual([config.hp, config.shield], [hp, shield]);
@@ -30,14 +35,40 @@ test("第一章十关 v1 血量与护盾符合任务书", () => {
 
 test("legacy 配置可回退且不污染 v1", () => {
   assert.equal(getEnemyHpConfig("CH1_01", "legacy").hp, 24);
-  assert.equal(getEnemyHpConfig("CH1_01", "v1").hp, 100);
+  assert.equal(getEnemyHpConfig("CH1_01", "v1").hp, 90);
+});
+
+test("普通关耐久按真实盘面泡泡数校准为约 1 分钟", () => {
+  chapterLevels.filter((level) => level.nodeType === "NORMAL_BATTLE").forEach((level) => {
+    const config = getEnemyHpConfig(level.id);
+    const raw = readFileSync(new URL(`../leveldate/${level.order}.txt`, import.meta.url), "utf8");
+    const layout = parseLevelDateLayout(raw, `${level.order}.txt`);
+    const maxInitialRow = Math.min(level.rows - 1, 13 - level.spawn.bottomSafetyRows);
+    const bubbleCount = projectCompleteLevelDateLayout(layout, maxInitialRow + 1).length;
+    const expectedShots = (config.hp + config.shield) / config.expectedEffectiveDamagePerShot;
+
+    assert.equal(config.initialBoardBubbleCount, bubbleCount);
+    assert.equal(config.displayMaxHp, 10);
+    assert.ok(expectedShots >= 14 && expectedShots <= 16, `${level.id} 预计 ${expectedShots.toFixed(2)} 发`);
+    assert.deepEqual(config.targetDurationSec, { min: 56, max: 64 });
+  });
+});
+
+test("普通怪对外显示 10 HP，内部耐久仍按盘面预算结算", () => {
+  const initial = createEnemyCombatState("CH1_01");
+  const damaged = resolveEnemyShotDamage(initial, { components: [{ sourceType: "MATCH_CLEAR", rawDamage: 9 }] });
+  assert.deepEqual(getEnemyDisplayDurability(initial), {
+    hp: 10, maxHp: 10, shield: 0, maxShield: 0, internalHp: 90, internalMaxHp: 90,
+  });
+  assert.equal(getEnemyDisplayDurability(damaged.state).hp, 9);
+  assert.equal(getEnemyDisplayDamage(initial, damaged.actualDamage), 1);
 });
 
 test("护盾优先吸收伤害", () => {
   const result = hit("CH1_07", 14);
   assert.equal(result.shieldDamage, 10);
   assert.equal(result.hpDamage, 4);
-  assert.equal(result.state.hp, 186);
+  assert.equal(result.state.hp, 126);
 });
 
 test("CH1-04 护盾存在时掉落伤害降低 20%", () => {
@@ -132,10 +163,10 @@ test("离线校准建议受单轮 +25%/-20% 上下限约束", () => {
   assert.equal(calculateRecommendedEhp(100, 15, 30), 80);
   const base: CombatTelemetrySnapshot = {
     level_id: "CH1_01", enemy_id: "ENEMY_SLIME", node_type: "NORMAL", hp_profile_version: "v1",
-    combat_duration_sec: 55, shots_fired: 13, shots_missed: 2, median_shot_cycle_sec: 4,
-    clear_damage: 70, drop_damage: 30, special_ball_damage: 0, relic_damage: 0, skill_damage: 0, status_damage: 0,
-    total_damage: 100, effective_damage_per_shot: 7.7, highest_single_shot_damage: 16, overkill_damage: 0,
-    initial_enemy_hp: 100, initial_enemy_shield: 0, remaining_enemy_hp: 0, remaining_enemy_shield: 0,
+    combat_duration_sec: 60, shots_fired: 15, shots_missed: 3, median_shot_cycle_sec: 4,
+    clear_damage: 60, drop_damage: 30, special_ball_damage: 0, relic_damage: 0, skill_damage: 0, status_damage: 0,
+    total_damage: 90, effective_damage_per_shot: 6, highest_single_shot_damage: 16, overkill_damage: 0,
+    initial_enemy_hp: 90, initial_enemy_shield: 0, remaining_enemy_hp: 0, remaining_enemy_shield: 0,
     boss_phase_reached: 1, boss_phase_transition_count: 0, enemy_intent_count: 3, enemy_attack_count: 1,
     pressure_trigger_count: 2, overflow_count: 0, player_hp_at_start: 100, player_hp_at_end: 95, player_damage_taken: 5,
     battle_result: "WIN", ball_bag_size: 16, special_ball_count: 0, relic_count: 3,

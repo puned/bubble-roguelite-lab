@@ -3,8 +3,9 @@
   "profileVersion": "v1",
   "levels": [
     {
-      "levelId": "CH1_01", "nodeType": "NORMAL", "enemyId": "ENEMY_SLIME", "hp": 100, "shield": 0, "legacyHp": 24,
-      "targetShotsMin": 12, "targetShotsMax": 13, "expectedEffectiveDamagePerShot": 8, "targetDurationSec": { "min": 50, "max": 60 }, "intentIntervalShots": 4,
+      "levelId": "CH1_01", "nodeType": "NORMAL", "enemyId": "ENEMY_SLIME", "hp": 90, "shield": 0, "legacyHp": 24,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 109, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 6, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "SPAWN_SLIME_2", "actionType": "SPAWN_BUBBLE", "count": 2, "params": { "kind": "SLIME" } },
         { "actionId": "ATTACK_4", "actionType": "ATTACK_PLAYER", "value": 4 },
@@ -13,7 +14,8 @@
     },
     {
       "levelId": "CH1_02", "nodeType": "NORMAL", "enemyId": "ENEMY_SLIME_GARDEN", "hp": 115, "shield": 0, "legacyHp": 30,
-      "targetShotsMin": 13, "targetShotsMax": 14, "expectedEffectiveDamagePerShot": 8.8, "targetDurationSec": { "min": 52, "max": 65 }, "intentIntervalShots": 4,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 142, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 7.67, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "SPAWN_NORMAL_2", "actionType": "SPAWN_BUBBLE", "count": 2, "params": { "kind": "NORMAL" } },
         { "actionId": "ATTACK_5", "actionType": "ATTACK_PLAYER", "value": 5 },
@@ -21,8 +23,9 @@
       ]
     },
     {
-      "levelId": "CH1_03", "nodeType": "NORMAL", "enemyId": "ENEMY_POISON_MUSHROOM", "hp": 130, "shield": 0, "legacyHp": 34,
-      "targetShotsMin": 14, "targetShotsMax": 15, "expectedEffectiveDamagePerShot": 9.3, "targetDurationSec": { "min": 55, "max": 68 }, "intentIntervalShots": 4,
+      "levelId": "CH1_03", "nodeType": "NORMAL", "enemyId": "ENEMY_POISON_MUSHROOM", "hp": 120, "shield": 0, "legacyHp": 34,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 152, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 8, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "POISON_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "POISON" } },
         { "actionId": "ATTACK_5", "actionType": "ATTACK_PLAYER", "value": 5 },
@@ -30,8 +33,9 @@
       ]
     },
     {
-      "levelId": "CH1_04", "nodeType": "NORMAL", "enemyId": "ENEMY_STONE_GUARD", "hp": 145, "shield": 15, "legacyHp": 40, "legacyShield": 0,
-      "targetShotsMin": 15, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 10.5, "targetDurationSec": { "min": 60, "max": 72 }, "intentIntervalShots": 4,
+      "levelId": "CH1_04", "nodeType": "NORMAL", "enemyId": "ENEMY_STONE_GUARD", "hp": 135, "shield": 15, "legacyHp": 40, "legacyShield": 0,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 189, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 10, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "shieldDropDamageReduction": 0.2, "shieldBreakVulnerableShots": 1, "shieldBreakVulnerableMultiplier": 1.2,
       "intentCycle": [
         { "actionId": "SPAWN_STONE_2", "actionType": "SPAWN_BUBBLE", "count": 2, "params": { "kind": "STONE" } },
@@ -53,8 +57,9 @@
       ]
     },
     {
-      "levelId": "CH1_06", "nodeType": "NORMAL", "enemyId": "ENEMY_SMALL_SPIDER", "hp": 170, "shield": 0, "legacyHp": 46,
-      "targetShotsMin": 14, "targetShotsMax": 15, "expectedEffectiveDamagePerShot": 12, "targetDurationSec": { "min": 55, "max": 68 }, "intentIntervalShots": 4,
+      "levelId": "CH1_06", "nodeType": "NORMAL", "enemyId": "ENEMY_SMALL_SPIDER", "hp": 135, "shield": 0, "legacyHp": 46,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 173, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 9, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "WEB_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "WEB" } },
         { "actionId": "ATTACK_6", "actionType": "ATTACK_PLAYER", "value": 6 },
@@ -62,8 +67,9 @@
       ]
     },
     {
-      "levelId": "CH1_07", "nodeType": "NORMAL", "enemyId": "ENEMY_VENOM_FLOWER", "hp": 190, "shield": 10, "legacyHp": 52, "legacyShield": 0,
-      "targetShotsMin": 15, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 13, "targetDurationSec": { "min": 60, "max": 72 }, "intentIntervalShots": 4,
+      "levelId": "CH1_07", "nodeType": "NORMAL", "enemyId": "ENEMY_VENOM_FLOWER", "hp": 130, "shield": 10, "legacyHp": 52, "legacyShield": 0,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 180, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 9.33, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "POISON_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "POISON" } },
         { "actionId": "ATTACK_7", "actionType": "ATTACK_PLAYER", "value": 7 },
@@ -71,8 +77,9 @@
       ]
     },
     {
-      "levelId": "CH1_08", "nodeType": "NORMAL", "enemyId": "ENEMY_MIRROR_SHADE", "hp": 215, "shield": 15, "legacyHp": 56, "legacyShield": 0,
-      "targetShotsMin": 16, "targetShotsMax": 17, "expectedEffectiveDamagePerShot": 14, "targetDurationSec": { "min": 65, "max": 75 }, "intentIntervalShots": 4,
+      "levelId": "CH1_08", "nodeType": "NORMAL", "enemyId": "ENEMY_MIRROR_SHADE", "hp": 160, "shield": 15, "legacyHp": 56, "legacyShield": 0,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 223, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 11.67, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "mirrorSpecialDamageReduction": 0.2, "shieldBreakVulnerableShots": 1, "shieldBreakVulnerableMultiplier": 1.2,
       "intentCycle": [
         { "actionId": "MIRROR_1", "actionType": "SPAWN_BUBBLE", "count": 1, "params": { "kind": "MIRROR" } },
@@ -82,8 +89,9 @@
       ]
     },
     {
-      "levelId": "CH1_09", "nodeType": "NORMAL", "enemyId": "ENEMY_WEB_GUARD", "hp": 240, "shield": 20, "legacyHp": 64, "legacyShield": 0,
-      "targetShotsMin": 17, "targetShotsMax": 18, "expectedEffectiveDamagePerShot": 15, "targetDurationSec": { "min": 70, "max": 82 }, "intentIntervalShots": 4,
+      "levelId": "CH1_09", "nodeType": "NORMAL", "enemyId": "ENEMY_WEB_GUARD", "hp": 120, "shield": 20, "legacyHp": 64, "legacyShield": 0,
+      "displayMaxHp": 10, "initialBoardBubbleCount": 177, "boardDamageBudgetRatio": 0.72,
+      "targetShotsMin": 14, "targetShotsMax": 16, "expectedEffectiveDamagePerShot": 9.33, "targetDurationSec": { "min": 56, "max": 64 }, "intentIntervalShots": 4,
       "intentCycle": [
         { "actionId": "WEB_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "WEB" } },
         { "actionId": "ATTACK_9", "actionType": "ATTACK_PLAYER", "value": 9 },

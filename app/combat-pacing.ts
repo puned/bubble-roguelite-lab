@@ -28,6 +28,9 @@ export type EnemyHpConfig = {
   shield: number;
   legacyHp: number;
   legacyShield?: number;
+  displayMaxHp?: number;
+  initialBoardBubbleCount?: number;
+  boardDamageBudgetRatio?: number;
   targetShotsMin: number;
   targetShotsMax: number;
   expectedEffectiveDamagePerShot: number;
@@ -330,10 +333,36 @@ export function getEnemyHpConfig(levelId: string, profile: HpProfileVersion = "v
     ...selected,
     hp: selected.legacyHp,
     shield: selected.legacyShield ?? 0,
+    displayMaxHp: selected.legacyHp,
     targetShotsMin: 1,
     targetShotsMax: Math.max(1, Math.round(selected.legacyHp / selected.expectedEffectiveDamagePerShot)),
     targetDurationSec: { min: 0, max: 60 },
   };
+}
+
+export function getEnemyDisplayDurability(state: EnemyCombatState) {
+  const config = getEnemyHpConfig(state.levelId, state.profileVersion, state.enemyId);
+  const baseDisplayMaxHp = config.displayMaxHp ?? config.hp;
+  const internalHpScale = baseDisplayMaxHp / Math.max(1, config.hp);
+  const maxHp = baseDisplayMaxHp * state.maxHp / Math.max(1, config.hp);
+  return {
+    hp: state.maxHp > 0 ? maxHp * state.hp / state.maxHp : 0,
+    maxHp,
+    shield: state.shield * internalHpScale,
+    maxShield: state.maxShield * internalHpScale,
+    internalHp: state.hp,
+    internalMaxHp: state.maxHp,
+  };
+}
+
+export function getEnemyDisplayDamage(state: EnemyCombatState, internalDamage: number) {
+  const config = getEnemyHpConfig(state.levelId, state.profileVersion, state.enemyId);
+  return Math.max(0, internalDamage) * (config.displayMaxHp ?? config.hp) / Math.max(1, config.hp);
+}
+
+export function formatEnemyDisplayValue(value: number) {
+  const rounded = Math.round(Math.max(0, value) * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
 }
 
 function legacyBossPhases(totalHp: number): BossPhaseConfig[] {
@@ -372,6 +401,7 @@ export function createEnemyCombatState(levelId: string, profile: HpProfileVersio
 export function restoreEnemyCombatState(saved: Partial<EnemyCombatState> | undefined, levelId: string, profile: HpProfileVersion) {
   const fresh = createEnemyCombatState(levelId, profile, saved?.enemyId);
   if (!saved || saved.levelId !== levelId || saved.profileVersion !== profile) return fresh;
+  if (saved.maxHp !== fresh.maxHp || saved.maxShield !== fresh.maxShield) return fresh;
   return {
     ...fresh,
     ...saved,
