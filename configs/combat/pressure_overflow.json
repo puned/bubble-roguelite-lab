@@ -1,0 +1,72 @@
+{
+  "enabled": true,
+  "spawnRowBeforeBoardDrop": true,
+  "boardDropRows": 1,
+  "damage": {
+    "baseDamage": 6,
+    "damagePerWeight": 2,
+    "repeatDamageIncrease": 0.25,
+    "repeatDamageMaxMultiplier": 2,
+    "canBeBlockedByShield": true
+  },
+  "bubbleWeights": {
+    "NORMAL": 1,
+    "STONE": 2,
+    "CHAIN": 2,
+    "WEB": 2,
+    "POISON": 3,
+    "LAVA": 3,
+    "BOSS_CORE": 5,
+    "COIN": 0,
+    "CHEST": 0,
+    "OTHER": 1
+  },
+  "directImpacted": {
+    "destroyAfterDamage": true,
+    "damageEnemy": false,
+    "grantRewards": false,
+    "triggerClearEffects": false,
+    "triggerDropEffects": false,
+    "triggerSpecialEffects": false,
+    "triggerRelics": false,
+    "triggerSkills": false,
+    "countForCombo": false,
+    "countForMission": false
+  },
+  "secondaryDetached": {
+    "destroyAfterDropAnimation": true,
+    "damagePlayer": false,
+    "damageEnemy": false,
+    "grantRewards": false,
+    "triggerClearEffects": false,
+    "triggerDropEffects": false,
+    "triggerSpecialEffects": false,
+    "triggerRelics": false,
+    "triggerSkills": false,
+    "countForCombo": false,
+    "countForMission": false
+  },
+  "state": {
+    "resetComboAfterOverflow": true,
+    "resetPressureAfterResolve": true,
+    "increaseOverflowCountOnlyWhenImpacted": true
+  },
+  "statusRules": {
+    "POISON": {
+      "enabled": true,
+      "applyOncePerResolve": true,
+      "statusId": "STATUS_POISON_PLAYER",
+      "baseStack": 1
+    },
+    "LAVA": {
+      "enabled": false,
+      "applyOncePerResolve": true,
+      "statusId": "PLAYER_BURN",
+      "baseStack": 1
+    }
+  },
+  "fallback": {
+    "unknownBubbleWeight": 1,
+    "forceRemoveUnknownOverflowBubble": true
+  }
+}

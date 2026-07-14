@@ -1,0 +1,51 @@
+{
+  "version": "v1",
+  "runStartGold": 10,
+  "runStartGoldCap": 25,
+  "coinBubbleValue": 2,
+  "coinBubbleCaps": { "normal": 5, "elite": 7, "bossPerPhase": 3, "bossTotal": 9 },
+  "performanceRewards": {
+    "noPressureOverflow": 2,
+    "noHpDamage": 2,
+    "remainingShotsAtLeast25Percent": 1,
+    "playerBoardClear": 1,
+    "caps": { "normal": 4, "elite": 5, "boss": 6 }
+  },
+  "routeMultiplierMax": 1.25,
+  "chapterMultipliers": {
+    "1": { "shopPrice": 1.0, "goldReward": 1.0 },
+    "2": { "shopPrice": 1.2, "goldReward": 1.2 },
+    "3": { "shopPrice": 1.45, "goldReward": 1.45 }
+  },
+  "battleRewards": {
+    "CH1_01": { "baseGold": 10, "fixedEncounterBonus": 0 },
+    "CH1_02": { "baseGold": 11, "fixedEncounterBonus": 0 },
+    "CH1_03": { "baseGold": 12, "fixedEncounterBonus": 0 },
+    "CH1_04": { "baseGold": 13, "fixedEncounterBonus": 0 },
+    "CH1_05": { "baseGold": 22, "fixedEncounterBonus": 6 },
+    "CH1_06": { "baseGold": 14, "fixedEncounterBonus": 0 },
+    "CH1_07": { "baseGold": 15, "fixedEncounterBonus": 0 },
+    "CH1_08": { "baseGold": 16, "fixedEncounterBonus": 0 },
+    "CH1_09": { "baseGold": 18, "fixedEncounterBonus": 0 },
+    "CH1_10": { "baseGold": 35, "fixedEncounterBonus": 10 }
+  },
+  "shopPrices": {
+    "normalBallPair": 12,
+    "commonSpecialBall": 22,
+    "rareSpecialBall": 32,
+    "removeBall": [32, 48, 64, 80],
+    "transformBall": 28,
+    "commonRelic": 45,
+    "rareRelic": 70,
+    "epicRelic": 110,
+    "heal20Percent": 18,
+    "nextBattleShield10": 12,
+    "nextBattleShots3": 20,
+    "cleanseCurse": [26, 36, 46, 56],
+    "reroll": [8, 14, 20]
+  },
+  "runEndConversion": {
+    "failed": { "divisor": 10, "cap": 15 },
+    "victory": { "divisor": 8, "cap": 30 }
+  }
+}

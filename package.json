@@ -1,0 +1,55 @@
+{
+  "name": "bubble-roguelite-lab",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "install:ci": "bash scripts/install-ci.sh",
+    "dev": "vite",
+    "build": "bash scripts/build-verified.sh",
+    "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
+    "test": "npm run test:core && npm run test:survival && npm run test:pressure && npm run test:combat && npm run test:board && npm run test:leveldate && npm run test:routes && npm run test:economy && npm run test:rewards && npm run test:shots && vite build && node --test tests/rendered-html.test.mjs",
+    "test:core": "node --experimental-strip-types --test tests/core-content.test.ts",
+    "test:survival": "node --experimental-strip-types --test tests/survival.test.ts",
+    "test:pressure": "node --experimental-strip-types --test tests/pressure-overflow.test.ts",
+    "test:combat": "node --experimental-strip-types --test tests/combat-pacing.test.ts",
+    "test:board": "node --experimental-strip-types --test tests/board-connectivity.test.ts",
+    "test:leveldate": "node --experimental-strip-types --test tests/initial-board-layout.test.ts tests/board-position.test.ts",
+    "test:routes": "node --experimental-strip-types --test tests/route-flow.test.ts",
+    "test:economy": "node --experimental-strip-types --test tests/gold-economy.test.ts",
+    "test:rewards": "node --experimental-strip-types --test tests/reward-rules.test.ts",
+    "test:shots": "node --experimental-strip-types --test tests/shot-budget.test.ts",
+    "report:pacing": "node --experimental-strip-types scripts/combat-pacing-report.ts",
+    "validate:artifact": "bash scripts/validate-artifact.sh",
+    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.6",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "displayName": "\u6ce1\u6ce1\u5c04\u51fb Roguelite \u8bbe\u8ba1\u7ad9"
+}

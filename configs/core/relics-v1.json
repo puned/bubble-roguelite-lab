@@ -1,0 +1,737 @@
+{
+  "schemaVersion": "1.0",
+  "globalRules": {
+    "defaultStackRule": "UNIQUE",
+    "effectsMustUseEffectResolver": true,
+    "overflowSecondaryDetachTriggersDropRelics": false,
+    "systemRefillTriggersBoardClearRelics": false,
+    "runtimeShotGrantUsesShotGrantCapUnlessIgnored": true
+  },
+  "relics": [
+    {
+      "relicId": "RELIC_SPARE_BARREL",
+      "name": "备用弹仓",
+      "rarity": "COMMON",
+      "tags": [
+        "reserve",
+        "control"
+      ],
+      "trigger": "ON_ACQUIRE",
+      "effects": [
+        {
+          "effectType": "MODIFY_RESERVE_SLOT_COUNT",
+          "value": 1
+        }
+      ],
+      "limits": {
+        "maxReserveSlotsAfterEffect": 2
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_GRAVITY_HOOK",
+      "name": "重力钩爪",
+      "rarity": "COMMON",
+      "tags": [
+        "drop",
+        "damage"
+      ],
+      "trigger": "ON_PLAYER_DROP_RESOLVED",
+      "conditions": [
+        {
+          "type": "DROP_CAUSE_EQUALS",
+          "value": "PLAYER_ACTION"
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "DAMAGE_ENEMY_BY_COUNT",
+          "countSource": "DROPPED_BUBBLE_COUNT",
+          "damagePerCount": 1,
+          "maxDamagePerTrigger": 12
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_GREED_COIN",
+      "name": "赌徒金币",
+      "rarity": "COMMON",
+      "tags": [
+        "gold",
+        "precision"
+      ],
+      "trigger": "ON_MATCH_CLEAR",
+      "conditions": [
+        {
+          "type": "DIRECT_MATCH_CLEAR_COUNT_EQUALS",
+          "value": 3
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "ADD_GOLD",
+          "value": 2
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 3
+      },
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_WEB_CUTTER",
+      "name": "断网刀",
+      "rarity": "COMMON",
+      "tags": [
+        "web",
+        "shield"
+      ],
+      "trigger": "ON_BOARD_MODIFIER_REMOVED",
+      "conditions": [
+        {
+          "type": "MODIFIER_ID_EQUALS",
+          "value": "MOD_WEB"
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "ADD_PLAYER_SHIELD_BY_COUNT",
+          "countSource": "REMOVED_MODIFIER_COUNT",
+          "valuePerCount": 1,
+          "maxValuePerShot": 6
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_STONE_SHELL",
+      "name": "石壳护符",
+      "rarity": "COMMON",
+      "tags": [
+        "shield",
+        "survival"
+      ],
+      "trigger": "ON_BATTLE_START",
+      "effects": [
+        {
+          "effectType": "ADD_PLAYER_SHIELD",
+          "value": 8
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_LIFE_SEED",
+      "name": "生命种子",
+      "rarity": "COMMON",
+      "tags": [
+        "heal",
+        "survival"
+      ],
+      "trigger": "ON_BATTLE_END",
+      "conditions": [
+        {
+          "type": "BATTLE_RESULT_EQUALS",
+          "value": "VICTORY"
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "HEAL_PLAYER",
+          "value": 3,
+          "subjectToCombatHealingCap": false
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_GREEN_LEAF_BADGE",
+      "name": "绿叶徽章",
+      "rarity": "COMMON",
+      "tags": [
+        "green",
+        "heal"
+      ],
+      "trigger": "ON_MATCH_CLEAR",
+      "conditions": [
+        {
+          "type": "CLEARED_COLOR_COUNT_AT_LEAST",
+          "color": "GREEN",
+          "value": 4
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "HEAL_PLAYER",
+          "value": 1,
+          "subjectToCombatHealingCap": true
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 4
+      },
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_BLUE_BARRIER",
+      "name": "蓝晶屏障",
+      "rarity": "COMMON",
+      "tags": [
+        "blue",
+        "shield"
+      ],
+      "trigger": "ON_MATCH_CLEAR",
+      "conditions": [
+        {
+          "type": "CLEARED_COLOR_COUNT_AT_LEAST",
+          "color": "BLUE",
+          "value": 4
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "ADD_PLAYER_SHIELD",
+          "value": 3
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 4
+      },
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_PRECISION_RECYCLE",
+      "name": "精准回收",
+      "rarity": "COMMON",
+      "tags": [
+        "drop",
+        "shots"
+      ],
+      "trigger": "ON_PLAYER_DROP_RESOLVED",
+      "conditions": [
+        {
+          "type": "DROP_CAUSE_EQUALS",
+          "value": "PLAYER_ACTION"
+        },
+        {
+          "type": "DROPPED_BUBBLE_COUNT_AT_LEAST",
+          "value": 10
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "GRANT_SHOTS",
+          "value": 1,
+          "shotGrantSource": "RELIC",
+          "ignoreRuntimeGrantCap": false
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_EMERGENCY_BANDAGE",
+      "name": "紧急绷带",
+      "rarity": "COMMON",
+      "tags": [
+        "heal",
+        "low_hp"
+      ],
+      "trigger": "ON_PLAYER_HP_CHANGED",
+      "conditions": [
+        {
+          "type": "HP_PERCENT_CROSSED_BELOW",
+          "value": 0.3
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "HEAL_PLAYER",
+          "value": 12,
+          "subjectToCombatHealingCap": false
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_BURN_CORE",
+      "name": "爆燃核心",
+      "rarity": "RARE",
+      "tags": [
+        "red",
+        "fire",
+        "board_transform"
+      ],
+      "trigger": "ON_MATCH_CLEAR",
+      "conditions": [
+        {
+          "type": "CLEARED_COLOR_COUNT_AT_LEAST",
+          "color": "RED",
+          "value": 3
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "TRANSFORM_RANDOM_NEIGHBOR_BUBBLE",
+          "targetColor": "RED",
+          "count": 1,
+          "targetFilter": "NORMAL_CLEARABLE_NOT_CORE"
+        }
+      ],
+      "limits": {
+        "maxTriggersPerShot": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_EMBER_BAG",
+      "name": "余烬袋",
+      "rarity": "RARE",
+      "tags": [
+        "fire",
+        "burn"
+      ],
+      "trigger": "PASSIVE_MODIFIER",
+      "effects": [
+        {
+          "effectType": "MODIFY_STATUS_DAMAGE",
+          "statusId": "STATUS_BURN_ENEMY",
+          "flatValue": 1
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_ICE_CLOCK",
+      "name": "冰霜怀表",
+      "rarity": "RARE",
+      "tags": [
+        "blue",
+        "pressure"
+      ],
+      "trigger": "ON_MATCH_CLEAR",
+      "conditions": [
+        {
+          "type": "CLEARED_COLOR_COUNT_AT_LEAST",
+          "color": "BLUE",
+          "value": 3
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "MODIFY_PRESSURE",
+          "value": -1,
+          "minimum": 0
+        }
+      ],
+      "limits": {
+        "maxTriggersPerShot": 1
+      },
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_PRISM",
+      "name": "彩虹棱镜",
+      "rarity": "RARE",
+      "tags": [
+        "rainbow",
+        "shot_cycle"
+      ],
+      "trigger": "ON_SHOT_START",
+      "conditions": [
+        {
+          "type": "CONSUMED_SHOT_INDEX_MOD_EQUALS",
+          "divisor": 6,
+          "remainder": 0
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "TEMPORARILY_TRANSFORM_CURRENT_BALL",
+          "toBallId": "BALL_RAINBOW",
+          "restoreOriginalTokenAfterShot": true
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_POWDER_BAG",
+      "name": "火药袋",
+      "rarity": "RARE",
+      "tags": [
+        "bomb",
+        "risk_reward"
+      ],
+      "trigger": "MULTI_TRIGGER",
+      "effects": [
+        {
+          "trigger": "PASSIVE_MODIFIER",
+          "effectType": "MODIFY_CLEAR_RADIUS",
+          "ballId": "BALL_BOMB",
+          "value": 1
+        },
+        {
+          "trigger": "ON_BATTLE_START",
+          "effectType": "SPAWN_BOARD_BUBBLE",
+          "bubbleId": "BUBBLE_STONE",
+          "count": 1,
+          "positionRule": "MIDDLE_SAFE_RANDOM"
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_MIRROR_WALL",
+      "name": "镜面墙",
+      "rarity": "RARE",
+      "tags": [
+        "rebound",
+        "damage"
+      ],
+      "trigger": "ON_SHOT_DAMAGE_CALCULATED",
+      "conditions": [
+        {
+          "type": "REBOUND_COUNT_AT_LEAST",
+          "value": 2
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "MULTIPLY_CURRENT_SHOT_DAMAGE",
+          "multiplier": 1.5
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_PRESSURE_BARRIER",
+      "name": "重压屏障",
+      "rarity": "RARE",
+      "tags": [
+        "pressure",
+        "shield"
+      ],
+      "trigger": "ON_PRESSURE_FULL_BEFORE_PUSH",
+      "effects": [
+        {
+          "effectType": "ADD_PLAYER_SHIELD",
+          "value": 5
+        }
+      ],
+      "stackRule": "UPGRADE"
+    },
+    {
+      "relicId": "RELIC_PURIFYING_FLASK",
+      "name": "净化瓶",
+      "rarity": "RARE",
+      "tags": [
+        "poison",
+        "heal"
+      ],
+      "trigger": "ON_STATUS_WILL_BE_ADDED_TO_PLAYER",
+      "conditions": [
+        {
+          "type": "STATUS_ID_EQUALS",
+          "value": "STATUS_POISON_PLAYER"
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "CANCEL_PENDING_STATUS"
+        },
+        {
+          "effectType": "HEAL_PLAYER",
+          "value": 5,
+          "subjectToCombatHealingCap": false
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_LAST_MAGAZINE",
+      "name": "绝境弹匣",
+      "rarity": "RARE",
+      "tags": [
+        "shots",
+        "low_shots"
+      ],
+      "trigger": "ON_REMAINING_SHOTS_CHANGED",
+      "conditions": [
+        {
+          "type": "REMAINING_SHOTS_CROSSED_TO_OR_BELOW",
+          "value": 3
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "GRANT_SHOTS",
+          "value": 2,
+          "shotGrantSource": "RELIC",
+          "ignoreRuntimeGrantCap": false
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_RESERVE_AMMO",
+      "name": "备用弹药",
+      "rarity": "RARE",
+      "tags": [
+        "shots",
+        "battle_start"
+      ],
+      "trigger": "ON_SHOT_BUDGET_INITIALIZE",
+      "effects": [
+        {
+          "effectType": "ADD_PRE_BATTLE_BONUS_SHOTS",
+          "value": 2,
+          "subjectToPreBattleBonusCap": true
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_COMPRESSION",
+      "name": "压缩器",
+      "rarity": "EPIC",
+      "tags": [
+        "small_bag",
+        "special"
+      ],
+      "trigger": "PASSIVE_MODIFIER",
+      "conditions": [
+        {
+          "type": "RUN_BALL_BAG_SIZE_AT_MOST",
+          "value": 12
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "MODIFY_SPECIAL_EFFECT_MAGNITUDE",
+          "multiplier": 1.3,
+          "excludeFields": [
+            "radius"
+          ]
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_CURSE_CROWN",
+      "name": "诅咒王冠",
+      "rarity": "EPIC",
+      "tags": [
+        "reward",
+        "curse",
+        "risk_reward"
+      ],
+      "trigger": "MULTI_TRIGGER",
+      "effects": [
+        {
+          "trigger": "ON_REWARD_GENERATE",
+          "effectType": "MODIFY_REWARD_RARITY_WEIGHT",
+          "value": 0.2
+        },
+        {
+          "trigger": "ON_BATTLE_START",
+          "effectType": "SPAWN_RANDOM_OBSTACLES",
+          "count": 2,
+          "positionRule": "NON_CRITICAL_PATH"
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_LUCKY_BELL",
+      "name": "幸运铃铛",
+      "rarity": "EPIC",
+      "tags": [
+        "death_prevent",
+        "pressure"
+      ],
+      "trigger": "ON_FATAL_DAMAGE",
+      "effects": [
+        {
+          "effectType": "SET_PLAYER_HP",
+          "value": 1
+        },
+        {
+          "effectType": "RESET_PRESSURE"
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_PHOENIX_FEATHER",
+      "name": "凤凰羽毛",
+      "rarity": "EPIC",
+      "tags": [
+        "revive",
+        "consumable"
+      ],
+      "trigger": "ON_PLAYER_DOWNED",
+      "effects": [
+        {
+          "effectType": "RESTORE_PLAYER_HP_PERCENT",
+          "value": 0.3
+        },
+        {
+          "effectType": "REMOVE_RELIC_SELF"
+        }
+      ],
+      "limits": {
+        "maxTriggersPerRun": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_BLOOD_MAGAZINE",
+      "name": "血色弹匣",
+      "rarity": "EPIC",
+      "tags": [
+        "special",
+        "self_damage",
+        "risk_reward"
+      ],
+      "trigger": "MULTI_TRIGGER",
+      "effects": [
+        {
+          "trigger": "PASSIVE_MODIFIER",
+          "effectType": "MODIFY_SPECIAL_EFFECT_MAGNITUDE",
+          "multiplier": 1.3,
+          "excludeFields": [
+            "radius"
+          ]
+        },
+        {
+          "trigger": "ON_SPECIAL_BALL_FIRED",
+          "effectType": "DAMAGE_PLAYER",
+          "value": 1,
+          "damageType": "SELF_COST",
+          "canKillPlayer": false
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_LAVA_HEART",
+      "name": "熔火之心",
+      "rarity": "BOSS",
+      "tags": [
+        "boss",
+        "fire"
+      ],
+      "trigger": "PASSIVE_MODIFIER",
+      "effects": [
+        {
+          "effectType": "MODIFY_STATUS_DAMAGE_AGAINST_BOSS",
+          "statusId": "STATUS_BURN_ENEMY",
+          "flatValue": 2
+        }
+      ],
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_UNYIELDING_CROWN",
+      "name": "不屈王冠",
+      "rarity": "BOSS",
+      "tags": [
+        "boss",
+        "overflow",
+        "survival"
+      ],
+      "trigger": "ON_PRESSURE_OVERFLOW_DAMAGE_CALCULATED",
+      "effects": [
+        {
+          "effectType": "MULTIPLY_PENDING_DAMAGE",
+          "multiplier": 0.5
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_SPIDER_SPOOL",
+      "name": "蛛丝线轴",
+      "rarity": "BOSS",
+      "tags": [
+        "boss",
+        "web",
+        "shots"
+      ],
+      "trigger": "ON_BOARD_MODIFIER_REMOVED",
+      "conditions": [
+        {
+          "type": "MODIFIER_ID_EQUALS",
+          "value": "MOD_WEB"
+        },
+        {
+          "type": "REMOVED_MODIFIER_COUNT_AT_LEAST",
+          "value": 3
+        },
+        {
+          "type": "SAME_PLAYER_SHOT",
+          "value": true
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "GRANT_SHOTS",
+          "value": 1,
+          "shotGrantSource": "RELIC",
+          "ignoreRuntimeGrantCap": false
+        },
+        {
+          "effectType": "ADD_PLAYER_SHIELD",
+          "value": 5
+        }
+      ],
+      "limits": {
+        "maxTriggersPerBattle": 1
+      },
+      "stackRule": "UNIQUE"
+    },
+    {
+      "relicId": "RELIC_MIRROR_SHARD",
+      "name": "镜像碎片",
+      "rarity": "BOSS",
+      "tags": [
+        "boss",
+        "mirror",
+        "vulnerable"
+      ],
+      "trigger": "ON_BOARD_BUBBLE_CLEARED",
+      "conditions": [
+        {
+          "type": "BUBBLE_ID_EQUALS",
+          "value": "BUBBLE_MIRROR"
+        }
+      ],
+      "effects": [
+        {
+          "effectType": "EXTEND_ENEMY_STATUS_DURATION",
+          "statusId": "STATUS_VULNERABLE_ENEMY",
+          "playerShots": 1
+        }
+      ],
+      "stackRule": "UNIQUE"
+    }
+  ]
+}

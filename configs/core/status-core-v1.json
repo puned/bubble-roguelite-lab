@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "1.0",
+  "damage": {
+    "clearDamagePerBubble": 1,
+    "dropDamagePerBubble": 1,
+    "dropDamageCaps": {
+      "NORMAL_EARLY": 18,
+      "NORMAL_LATE": 24,
+      "ELITE": 32,
+      "BOSS": 40
+    },
+    "bossVulnerableMultiplier": 1.5,
+    "bossPhaseOverkillCarryRate": 0.3
+  },
+  "ballBag": {
+    "drawMode": "BAG_RANDOM",
+    "reserveSlotCountDefault": 1,
+    "swapLimitPerShot": 1,
+    "swapConsumesShot": false,
+    "reshuffleDiscardWhenDrawPileEmpty": true,
+    "addDeleteTransformDoNotChangeShotBudget": true,
+    "minimumRunBagSize": 10,
+    "minimumNormalColorFamilies": 2
+  },
+  "shotResolutionPriority": [
+    "FLIGHT_COLLISION_ATTACH",
+    "MATCH_CLEAR",
+    "PLAYER_DETACH_DROP",
+    "BALL_SKILL_RELIC_STATUS_EFFECTS",
+    "SHOT_AND_PRESSURE_COUNTER_ADVANCE",
+    "EFFECT_QUEUE_DRAIN",
+    "VICTORY_OR_OBJECTIVE_CHECK",
+    "BOSS_PHASE_TRANSITION_AND_PHASE_SHOT_GRANT",
+    "LEGAL_SHOT_REFUNDS",
+    "SHOT_BUDGET_EXHAUSTION_CHECK",
+    "BOARD_CLEAR_REFILL_IF_PLAYER_CAN_CONTINUE",
+    "DUE_ENEMY_INTENT",
+    "NORMAL_PRESSURE_PUSH",
+    "PLAYER_DEATH_AND_REVIVE_CHECK",
+    "ADVANCE_SHOT_QUEUE"
+  ],
+  "pressure": {
+    "defaultPressureMax": 5,
+    "earlyChapterPressureMax": 6,
+    "bossFinalPhasePressureMax": 4,
+    "onFull": {
+      "addTopRows": 1,
+      "dropBoardRows": 1,
+      "resetPressure": true
+    },
+    "overflow": {
+      "baseDamage": 6,
+      "damagePerWeight": 2,
+      "repeatDamageIncrease": 0.25,
+      "repeatDamageMaxMultiplier": 2.0,
+      "destroyImpactedBubbles": true,
+      "secondaryDetachGrantReward": false,
+      "secondaryDetachDamageEnemy": false,
+      "secondaryDetachDamagePlayer": false,
+      "resetCombo": true
+    }
+  },
+  "boardClearRefill": {
+    "priorityAboveEnemyIntentAndPressurePush": true,
+    "doNotRefillIfEnemyDefeated": true,
+    "doNotRefillIfShotBudgetExhaustedWithoutRefund": true,
+    "normal": {
+      "pressureCarryRate": 0.5,
+      "graceShots": 2,
+      "refillRows": 3,
+      "density": 0.7
+    },
+    "elite": {
+      "pressureCarryRate": 0.67,
+      "graceShots": 2,
+      "refillRows": 4,
+      "density": 0.76
+    },
+    "boss": {
+      "pressureCarryRate": 0.75,
+      "graceShots": 1,
+      "refillRowsMin": 4,
+      "refillRowsMax": 5,
+      "density": 0.8
+    }
+  },
+  "playerHealth": {
+    "defaultMaxHp": 100,
+    "maxHpCap": 160,
+    "shieldMaxPercent": 0.5,
+    "combatHealingCapPercent": 0.15,
+    "shieldClearsAfterBattle": true,
+    "normalBattleEndHeal": 4,
+    "eliteBattleEndHeal": 12,
+    "bossBattleEndHealPercent": 0.25
+  },
+  "failure": {
+    "primaryFailureReasons": [
+      "PLAYER_HP_ZERO",
+      "SHOT_LIMIT_EXHAUSTED"
+    ],
+    "bottomTouchFailsImmediately": false,
+    "allowManualContinue": true,
+    "maxManualContinuePerBattle": 1,
+    "hpDownedAndShotExhaustionShareContinueUse": true
+  },
+  "statuses": [
+    {
+      "statusId": "STATUS_BURN_ENEMY",
+      "name": "燃烧",
+      "target": "ENEMY",
+      "triggerTiming": "BEFORE_ENEMY_ACTION",
+      "stackMode": "ADD_VALUE_REFRESH_DURATION",
+      "defaultValue": 2,
+      "defaultDurationEnemyActions": 2,
+      "maxValue": 12,
+      "damageType": "STATUS_DAMAGE",
+      "shieldBypass": false,
+      "clearOnBattleEnd": true
+    },
+    {
+      "statusId": "STATUS_VULNERABLE_ENEMY",
+      "name": "易伤",
+      "target": "ENEMY",
+      "triggerTiming": "PASSIVE_WHILE_ACTIVE",
+      "stackMode": "MAX_MAGNITUDE_REFRESH_DURATION",
+      "damageMultiplier": 1.5,
+      "defaultDurationPlayerShots": 3,
+      "maxDamageMultiplier": 1.5,
+      "clearOnBossPhaseChange": false,
+      "clearOnBattleEnd": true
+    },
+    {
+      "statusId": "STATUS_POISON_PLAYER",
+      "name": "中毒",
+      "target": "PLAYER",
+      "triggerTiming": "AFTER_ENEMY_ACTION",
+      "stackMode": "ADD_VALUE_REFRESH_DURATION",
+      "defaultValue": 2,
+      "defaultDurationEnemyActions": 2,
+      "maxValue": 6,
+      "damageType": "STATUS_DAMAGE",
+      "shieldBypass": true,
+      "canKillPlayer": true,
+      "clearOnBattleEnd": true
+    },
+    {
+      "statusId": "STATUS_INTENT_DELAY",
+      "name": "意图延迟",
+      "target": "ENEMY",
+      "triggerTiming": "ON_APPLY",
+      "stackMode": "ADD_WITH_CAP",
+      "maxDelayShots": 2,
+      "clearOnBattleEnd": true
+    },
+    {
+      "statusId": "STATUS_RESERVE_LOCK",
+      "name": "备用球锁定",
+      "target": "PLAYER",
+      "triggerTiming": "PASSIVE_WHILE_ACTIVE",
+      "stackMode": "REFRESH_DURATION",
+      "defaultDurationPlayerShots": 1,
+      "effects": [
+        {
+          "effectType": "DISABLE_RESERVE_SWAP"
+        }
+      ],
+      "clearOnBattleEnd": true
+    }
+  ]
+}

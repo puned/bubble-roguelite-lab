@@ -1,0 +1,41 @@
+{
+  "levelId": "CH1_10",
+  "nodeType": "BOSS",
+  "bossId": "BOSS_SPIDER_QUEEN",
+  "totalHp": 720,
+  "totalShield": 60,
+  "targetShotsMin": 43,
+  "targetShotsMax": 47,
+  "expectedEffectiveDamagePerShot": 17.5,
+  "targetDurationSec": { "min": 180, "max": 210 },
+  "phaseGateEnabled": true,
+  "overkillCarryRate": 0.3,
+  "transitionDurationMs": 2800,
+  "phases": [
+    {
+      "phaseId": "WEB_WEAVING", "hp": 220, "shield": 0, "targetShotsMin": 12, "targetShotsMax": 13, "intentIntervalShots": 4, "pressureMax": 5,
+      "intentCycle": [
+        { "actionId": "WEB_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "WEB" } },
+        { "actionId": "ATTACK_8", "actionType": "ATTACK_PLAYER", "value": 8 },
+        { "actionId": "WEB_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "WEB" } }
+      ]
+    },
+    {
+      "phaseId": "EGG_HATCH", "hp": 240, "shield": 20, "targetShotsMin": 14, "targetShotsMax": 15, "intentIntervalShots": 4, "pressureMax": 5,
+      "intentCycle": [
+        { "actionId": "SPAWN_EGG_1", "actionType": "SPAWN_BUBBLE", "count": 1, "params": { "kind": "EGG" } },
+        { "actionId": "ATTACK_10", "actionType": "ATTACK_PLAYER", "value": 10 },
+        { "actionId": "TICK_EGGS", "actionType": "TICK_OBJECT" },
+        { "actionId": "SPAWN_EGG_1", "actionType": "SPAWN_BUBBLE", "count": 1, "params": { "kind": "EGG" } }
+      ]
+    },
+    {
+      "phaseId": "WEB_STORM", "hp": 260, "shield": 40, "targetShotsMin": 16, "targetShotsMax": 18, "intentIntervalShots": 3, "pressureMax": 4,
+      "intentCycle": [
+        { "actionId": "WEB_2", "actionType": "ADD_MODIFIER", "count": 2, "params": { "kind": "WEB" } },
+        { "actionId": "ATTACK_12", "actionType": "ATTACK_PLAYER", "value": 12 },
+        { "actionId": "WEB_STORM_3", "actionType": "ADD_MODIFIER", "count": 3, "params": { "kind": "WEB" } }
+      ]
+    }
+  ]
+}

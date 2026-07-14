@@ -1,0 +1,706 @@
+{
+  "schemaVersion": "1.0",
+  "globalIntentRules": {
+    "intentCountdownUnit": "PLAYER_SHOT_RESOLVED",
+    "intentMustBeTelegraphed": true,
+    "intentResolvesAfterBoardClearRefill": true,
+    "spawnSkillsMustAvoidCriticalPath": true,
+    "spawnSkillsMustRespectBoardObjectCaps": true,
+    "enemyAttacksDoNotConsumePlayerShots": true
+  },
+  "chapter1NormalEnemies": [
+    {
+      "enemyId": "ENEMY_SMALL_SLIME",
+      "name": "小史莱姆",
+      "defaultLevelId": "CH1_01",
+      "enemyType": "NORMAL",
+      "hp": 100,
+      "shield": 0,
+      "pressureMax": 6,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "SLIME_SPAWN_2",
+          "displayName": "黏液增殖",
+          "effects": [
+            {
+              "effectType": "SPAWN_COLORED_BUBBLES",
+              "count": 2,
+              "colorRule": "ACTIVE_COLOR_WEIGHTED",
+              "positionRule": "TOP_SAFE_RANDOM"
+            }
+          ]
+        },
+        {
+          "intentId": "SLIME_ATTACK_4",
+          "displayName": "撞击",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 4,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_GARDEN_SLIME",
+      "name": "花园史莱姆",
+      "defaultLevelId": "CH1_02",
+      "enemyType": "NORMAL",
+      "hp": 115,
+      "shield": 0,
+      "pressureMax": 6,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "GARDEN_SLIME_MARK",
+          "displayName": "黏液覆盖",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_TAG",
+              "tagId": "SLIME_MARK",
+              "count": 1,
+              "targetRule": "RANDOM_NORMAL_BUBBLE"
+            }
+          ]
+        },
+        {
+          "intentId": "GARDEN_SLIME_ATTACK_5",
+          "displayName": "弹跳冲撞",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 5,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_POISON_MUSHROOM",
+      "name": "毒菇",
+      "defaultLevelId": "CH1_03",
+      "enemyType": "NORMAL",
+      "hp": 130,
+      "shield": 0,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "POISON_INFECT_2",
+          "displayName": "孢子污染",
+          "effects": [
+            {
+              "effectType": "TRANSFORM_BOARD_BUBBLE",
+              "toBubbleId": "BUBBLE_POISON",
+              "count": 2,
+              "targetRule": "MIDDLE_NORMAL_NON_CRITICAL"
+            }
+          ]
+        },
+        {
+          "intentId": "POISON_ATTACK_5",
+          "displayName": "毒孢冲击",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 5,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_STONE_GUARD",
+      "name": "石像守卫",
+      "defaultLevelId": "CH1_04",
+      "enemyType": "NORMAL",
+      "hp": 145,
+      "shield": 15,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "passives": [
+        {
+          "passiveId": "STONE_SHIELD_DROP_REDUCTION",
+          "condition": "SHIELD_GT_ZERO",
+          "effectType": "MULTIPLY_INCOMING_DROP_DAMAGE",
+          "multiplier": 0.8
+        },
+        {
+          "passiveId": "STONE_SHIELD_BREAK_VULNERABLE",
+          "trigger": "ON_SHIELD_BROKEN",
+          "effectType": "ADD_STATUS_TO_ENEMY",
+          "statusId": "STATUS_VULNERABLE_ENEMY",
+          "durationPlayerShots": 1
+        }
+      ],
+      "intentCycle": [
+        {
+          "intentId": "STONE_SPAWN_2",
+          "displayName": "落石",
+          "effects": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_STONE",
+              "count": 2,
+              "positionRule": "MIDDLE_SAFE_RANDOM"
+            }
+          ]
+        },
+        {
+          "intentId": "STONE_ATTACK_6",
+          "displayName": "岩拳",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 6,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_SMALL_SPIDER",
+      "name": "小蜘蛛",
+      "defaultLevelId": "CH1_06",
+      "enemyType": "NORMAL",
+      "hp": 170,
+      "shield": 0,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "SPIDER_WEB_2",
+          "displayName": "织网",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 2,
+              "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+            }
+          ]
+        },
+        {
+          "intentId": "SPIDER_ATTACK_6",
+          "displayName": "啃噬",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 6,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_POISON_FLOWER",
+      "name": "毒液花灵",
+      "defaultLevelId": "CH1_07",
+      "enemyType": "NORMAL",
+      "hp": 190,
+      "shield": 10,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "FLOWER_INFECT_2",
+          "displayName": "毒液播种",
+          "effects": [
+            {
+              "effectType": "TRANSFORM_BOARD_BUBBLE",
+              "toBubbleId": "BUBBLE_POISON",
+              "count": 2,
+              "targetRule": "MIDDLE_NORMAL_NON_CRITICAL"
+            }
+          ]
+        },
+        {
+          "intentId": "FLOWER_ATTACK_7",
+          "displayName": "毒刺",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 7,
+              "damageType": "ENEMY_ATTACK"
+            },
+            {
+              "effectType": "ADD_STATUS_TO_PLAYER",
+              "statusId": "STATUS_POISON_PLAYER",
+              "value": 2,
+              "durationEnemyActions": 2
+            }
+          ]
+        },
+        {
+          "intentId": "FLOWER_POISON_BLOOM",
+          "displayName": "毒花盛放",
+          "effects": [
+            {
+              "effectType": "SPREAD_BOARD_BUBBLE_TYPE",
+              "sourceBubbleId": "BUBBLE_POISON",
+              "count": 1,
+              "maxTargetTypeCount": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_MIRROR_GHOST",
+      "name": "镜影怪",
+      "defaultLevelId": "CH1_08",
+      "enemyType": "NORMAL",
+      "hp": 215,
+      "shield": 15,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "MIRROR_SPAWN",
+          "displayName": "镜像投射",
+          "effects": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_MIRROR",
+              "count": 1,
+              "positionRule": "MIDDLE_SAFE_RANDOM",
+              "maxOnBoard": 1
+            }
+          ]
+        },
+        {
+          "intentId": "MIRROR_ATTACK_8",
+          "displayName": "幻光冲击",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 8,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        },
+        {
+          "intentId": "MIRROR_LOCK_RESERVE",
+          "displayName": "镜面封锁",
+          "effects": [
+            {
+              "effectType": "ADD_STATUS_TO_PLAYER",
+              "statusId": "STATUS_RESERVE_LOCK",
+              "durationPlayerShots": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ENEMY_WEB_GUARD",
+      "name": "蛛网守卫",
+      "defaultLevelId": "CH1_09",
+      "enemyType": "NORMAL",
+      "hp": 240,
+      "shield": 20,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "WEB_GUARD_WEB_3",
+          "displayName": "封锁蛛网",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 3,
+              "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+            }
+          ]
+        },
+        {
+          "intentId": "WEB_GUARD_ATTACK_9",
+          "displayName": "守卫重击",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 9,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        },
+        {
+          "intentId": "WEB_GUARD_REINFORCE",
+          "displayName": "强化蛛网",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 2,
+              "targetRule": "LOWEST_VALID_BUBBLE"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "chapter1ElitePool": [
+    {
+      "enemyId": "ELITE_STONE_COLOSSUS",
+      "name": "石甲巨像",
+      "enemyType": "ELITE",
+      "hp": 240,
+      "shield": 50,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "ELITE_STONE_SPAWN_2",
+          "displayName": "巨石坠落",
+          "effects": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_STONE",
+              "count": 2,
+              "positionRule": "MIDDLE_SAFE_RANDOM"
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_STONE_ATTACK_8",
+          "displayName": "巨像重拳",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 8,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_STONE_RESTORE_SHIELD",
+          "displayName": "重铸石甲",
+          "effects": [
+            {
+              "effectType": "RESTORE_ENEMY_SHIELD",
+              "value": 15
+            }
+          ],
+          "limits": {
+            "maxUsesPerBattle": 1
+          }
+        },
+        {
+          "intentId": "ELITE_STONE_ATTACK_8_B",
+          "displayName": "震地重拳",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 8,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ELITE_POISON_LORD",
+      "name": "毒液领主",
+      "enemyType": "ELITE",
+      "hp": 235,
+      "shield": 55,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "ELITE_POISON_INFECT_3",
+          "displayName": "剧毒播种",
+          "effects": [
+            {
+              "effectType": "TRANSFORM_BOARD_BUBBLE",
+              "toBubbleId": "BUBBLE_POISON",
+              "count": 3,
+              "targetRule": "MIDDLE_NORMAL_NON_CRITICAL"
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_POISON_ATTACK",
+          "displayName": "毒潮",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 7,
+              "damageType": "ENEMY_ATTACK"
+            },
+            {
+              "effectType": "ADD_STATUS_TO_PLAYER",
+              "statusId": "STATUS_POISON_PLAYER",
+              "value": 2,
+              "durationEnemyActions": 2
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_POISON_BLOOM",
+          "displayName": "孢子爆发",
+          "effects": [
+            {
+              "effectType": "SPREAD_BOARD_BUBBLE_TYPE",
+              "sourceBubbleId": "BUBBLE_POISON",
+              "count": 2,
+              "maxTargetTypeCount": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enemyId": "ELITE_WEB_GUARDIAN",
+      "name": "蛛网领主",
+      "enemyType": "ELITE",
+      "hp": 250,
+      "shield": 40,
+      "pressureMax": 5,
+      "intentIntervalShots": 4,
+      "intentCycle": [
+        {
+          "intentId": "ELITE_WEB_3",
+          "displayName": "蛛网封锁",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 3,
+              "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_WEB_ATTACK_8",
+          "displayName": "撕咬",
+          "effects": [
+            {
+              "effectType": "DAMAGE_PLAYER",
+              "value": 8,
+              "damageType": "ENEMY_ATTACK"
+            }
+          ]
+        },
+        {
+          "intentId": "ELITE_WEB_ANCHOR",
+          "displayName": "锚定蛛丝",
+          "effects": [
+            {
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 2,
+              "targetRule": "CRITICAL_SUPPORT_BUBBLE_NOT_UNIQUE_PATH"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "chapter1Bosses": [
+    {
+      "bossId": "BOSS_SPIDER_QUEEN",
+      "name": "蛛后",
+      "enemyType": "BOSS",
+      "totalHp": 720,
+      "totalShield": 60,
+      "phaseGate": {
+        "enabled": true,
+        "overkillCarryRate": 0.3,
+        "resetIntentOnPhaseChange": true
+      },
+      "phaseShotGrants": [
+        {
+          "afterPhaseId": "PHASE_1_WEB",
+          "grantShots": 3
+        },
+        {
+          "afterPhaseId": "PHASE_2_EGG",
+          "grantShots": 3
+        }
+      ],
+      "phases": [
+        {
+          "phaseId": "PHASE_1_WEB",
+          "name": "织网",
+          "hp": 220,
+          "shield": 0,
+          "pressureMax": 5,
+          "intentIntervalShots": 4,
+          "onPhaseStart": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_BOSS_CORE",
+              "count": 1,
+              "positionRule": "CENTER_NEAR"
+            }
+          ],
+          "intentCycle": [
+            {
+              "intentId": "QUEEN_WEB_2",
+              "displayName": "织网",
+              "effects": [
+                {
+                  "effectType": "ADD_BOARD_MODIFIER",
+                  "modifierId": "MOD_WEB",
+                  "count": 2,
+                  "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+                }
+              ]
+            },
+            {
+              "intentId": "QUEEN_ATTACK_8",
+              "displayName": "蛛后啃噬",
+              "effects": [
+                {
+                  "effectType": "DAMAGE_PLAYER",
+                  "value": 8,
+                  "damageType": "ENEMY_ATTACK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "phaseId": "PHASE_2_EGG",
+          "name": "产卵",
+          "hp": 240,
+          "shield": 20,
+          "pressureMax": 5,
+          "intentIntervalShots": 4,
+          "onPhaseStart": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_BOSS_CORE",
+              "count": 1,
+              "positionRule": "CENTER_NEAR"
+            }
+          ],
+          "intentCycle": [
+            {
+              "intentId": "QUEEN_SPAWN_EGG",
+              "displayName": "产卵",
+              "effects": [
+                {
+                  "effectType": "SPAWN_BOARD_BUBBLE",
+                  "bubbleId": "BUBBLE_SPIDER_EGG",
+                  "count": 1,
+                  "positionRule": "MIDDLE_SAFE_RANDOM",
+                  "maxOnBoard": 2
+                }
+              ]
+            },
+            {
+              "intentId": "QUEEN_ATTACK_10",
+              "displayName": "毒牙撕咬",
+              "effects": [
+                {
+                  "effectType": "DAMAGE_PLAYER",
+                  "value": 10,
+                  "damageType": "ENEMY_ATTACK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "phaseId": "PHASE_3_WEB_STORM",
+          "name": "蛛网风暴",
+          "hp": 260,
+          "shield": 40,
+          "pressureMax": 4,
+          "intentIntervalShots": 3,
+          "onPhaseStart": [
+            {
+              "effectType": "SPAWN_BOARD_BUBBLE",
+              "bubbleId": "BUBBLE_BOSS_CORE",
+              "count": 1,
+              "positionRule": "CENTER_NEAR"
+            }
+          ],
+          "passives": [
+            {
+              "passiveId": "WEB_ON_PLAYER_MISS",
+              "trigger": "ON_PLAYER_MISS",
+              "effectType": "ADD_BOARD_MODIFIER",
+              "modifierId": "MOD_WEB",
+              "count": 1,
+              "limits": {
+                "maxTriggersBetweenBossActions": 2
+              }
+            }
+          ],
+          "intentCycle": [
+            {
+              "intentId": "QUEEN_WEB_STORM",
+              "displayName": "蛛网风暴",
+              "effects": [
+                {
+                  "effectType": "ADD_BOARD_MODIFIER",
+                  "modifierId": "MOD_WEB",
+                  "count": 3,
+                  "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+                }
+              ]
+            },
+            {
+              "intentId": "QUEEN_ATTACK_12",
+              "displayName": "狂暴撕咬",
+              "effects": [
+                {
+                  "effectType": "DAMAGE_PLAYER",
+                  "value": 12,
+                  "damageType": "ENEMY_ATTACK"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "coreRule": {
+        "bubbleId": "BUBBLE_BOSS_CORE",
+        "onClearStatusId": "STATUS_VULNERABLE_ENEMY",
+        "damageMultiplier": 1.5,
+        "durationPlayerShots": 3,
+        "maxCorePerPhase": 1
+      }
+    }
+  ],
+  "futureBossTemplates": [
+    {
+      "bossId": "BOSS_LAVA_GIANT",
+      "implementationPriority": "P1",
+      "coreMechanics": [
+        "LAVA_COUNTDOWN",
+        "PRESSURE_MAX_REDUCTION",
+        "ICE_COUNTERPLAY"
+      ]
+    },
+    {
+      "bossId": "BOSS_MIRROR_MAGE",
+      "implementationPriority": "P1",
+      "coreMechanics": [
+        "SPECIAL_BALL_MIRROR_ENERGY",
+        "MIRROR_BUBBLE",
+        "VULNERABLE_ON_MIRROR_CLEAR"
+      ]
+    },
+    {
+      "bossId": "BOSS_CHAOS_CORE",
+      "implementationPriority": "P1",
+      "coreMechanics": [
+        "COLOR_POLLUTION",
+        "TEMPORARY_CHAOS_BALL_INJECTION",
+        "CHAOS_CORE_CLEANSE"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,530 @@
+{
+  "schemaVersion": "1.0",
+  "globalRules": {
+    "normalMatchCount": 3,
+    "launcherBallConsumesShot": 1,
+    "childProjectileConsumesShot": 0,
+    "specialBallsRecycleByDefault": true,
+    "activeNormalColors": [
+      "RED",
+      "BLUE",
+      "YELLOW",
+      "GREEN"
+    ],
+    "temporaryCurseBallsRemovedAfterBattle": true,
+    "bagOperationsDoNotChangeShotBudgetByDefault": true
+  },
+  "launcherBalls": [
+    {
+      "ballId": "BALL_RED",
+      "name": "红球",
+      "implementationPriority": "P0",
+      "ballType": "NORMAL",
+      "equivalentColor": "RED",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": []
+    },
+    {
+      "ballId": "BALL_BLUE",
+      "name": "蓝球",
+      "implementationPriority": "P0",
+      "ballType": "NORMAL",
+      "equivalentColor": "BLUE",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": []
+    },
+    {
+      "ballId": "BALL_YELLOW",
+      "name": "黄球",
+      "implementationPriority": "P0",
+      "ballType": "NORMAL",
+      "equivalentColor": "YELLOW",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": []
+    },
+    {
+      "ballId": "BALL_GREEN",
+      "name": "绿球",
+      "implementationPriority": "P0",
+      "ballType": "NORMAL",
+      "equivalentColor": "GREEN",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": []
+    },
+    {
+      "ballId": "BALL_BOMB",
+      "name": "炸弹球",
+      "implementationPriority": "P0",
+      "ballType": "SPECIAL",
+      "equivalentColor": "NONE",
+      "canMatch": false,
+      "attachMode": "IMPACT_RESOLVE",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_FIRST_BOARD_COLLISION",
+          "effectType": "CLEAR_RADIUS",
+          "radius": 1,
+          "includeObstacle": true,
+          "includeCore": false,
+          "grantNormalClearDamage": true
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_FIRE",
+      "name": "火焰球",
+      "implementationPriority": "P0",
+      "ballType": "SPECIAL",
+      "equivalentColor": "RED",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "CLEAR_RADIUS",
+          "radius": 1,
+          "includeObstacle": false,
+          "includeCore": false,
+          "grantNormalClearDamage": true
+        },
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "ADD_STATUS_TO_ENEMY",
+          "statusId": "STATUS_BURN_ENEMY",
+          "value": 2,
+          "durationEnemyActions": 2
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_ICE",
+      "name": "冰冻球",
+      "implementationPriority": "P0",
+      "ballType": "SPECIAL",
+      "equivalentColor": "BLUE",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "MODIFY_PRESSURE",
+          "value": -1,
+          "minimum": 0
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_RAINBOW",
+      "name": "彩虹球",
+      "implementationPriority": "P0",
+      "ballType": "SPECIAL",
+      "equivalentColor": "RAINBOW",
+      "canMatch": true,
+      "attachMode": "AUTO_COLOR_ATTACH",
+      "colorSelectionRule": [
+        "MAX_IMMEDIATE_MATCH_SIZE",
+        "MAX_DROP_POTENTIAL",
+        "ACTIVE_COLOR_WEIGHT",
+        "COLOR_ENUM_ORDER"
+      ],
+      "exhaustOnUse": false,
+      "effects": []
+    },
+    {
+      "ballId": "BALL_PIERCE",
+      "name": "穿透球",
+      "implementationPriority": "P0",
+      "ballType": "SPECIAL",
+      "equivalentColor": "DYNAMIC",
+      "canMatch": true,
+      "attachMode": "PIERCE_FIRST_OCCUPIED_CELL",
+      "colorSelectionRule": [
+        "COPY_NEAREST_ADJACENT_NORMAL_COLOR",
+        "FALLBACK_RAINBOW"
+      ],
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_FLIGHT",
+          "effectType": "IGNORE_FIRST_BOARD_COLLISION",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_HEAL",
+      "name": "治疗球",
+      "implementationPriority": "P1",
+      "ballType": "UTILITY",
+      "equivalentColor": "GREEN",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "HEAL_PLAYER",
+          "value": 6,
+          "subjectToCombatHealingCap": true
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_SHIELD",
+      "name": "护盾球",
+      "implementationPriority": "P1",
+      "ballType": "UTILITY",
+      "equivalentColor": "BLUE",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "ADD_PLAYER_SHIELD",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_CHARGE",
+      "name": "充能球",
+      "implementationPriority": "P1",
+      "ballType": "UTILITY",
+      "equivalentColor": "YELLOW",
+      "canMatch": true,
+      "attachMode": "NORMAL_ATTACH",
+      "exhaustOnUse": false,
+      "effects": [
+        {
+          "trigger": "ON_MATCH_CLEAR_CONTAINING_SOURCE",
+          "effectType": "ADD_SKILL_ENERGY",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_CURSE_WEB",
+      "name": "蛛网诅咒球",
+      "implementationPriority": "P0",
+      "ballType": "CURSE",
+      "equivalentColor": "NONE",
+      "canMatch": false,
+      "attachMode": "IMPACT_RESOLVE",
+      "isTemporary": true,
+      "removeAfterBattle": true,
+      "exhaustOnUse": true,
+      "effects": [
+        {
+          "trigger": "ON_FIRST_BOARD_COLLISION",
+          "effectType": "ADD_BOARD_MODIFIER",
+          "modifierId": "MOD_WEB",
+          "count": 2,
+          "targetRule": "RANDOM_VALID_EXISTING_BUBBLE"
+        }
+      ]
+    },
+    {
+      "ballId": "BALL_CHAOS",
+      "name": "混沌球",
+      "implementationPriority": "P1",
+      "ballType": "CURSE",
+      "equivalentColor": "RAINBOW",
+      "canMatch": true,
+      "attachMode": "AUTO_COLOR_ATTACH",
+      "isTemporary": true,
+      "removeAfterBattle": true,
+      "exhaustOnUse": true,
+      "effects": [
+        {
+          "trigger": "ON_PROJECTILE_RELEASED",
+          "effectType": "MODIFY_PRESSURE",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "boardBubbles": [
+    {
+      "bubbleId": "BUBBLE_NORMAL_RED",
+      "name": "红色泡泡",
+      "bubbleType": "NORMAL",
+      "color": "RED",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_NORMAL_BLUE",
+      "name": "蓝色泡泡",
+      "bubbleType": "NORMAL",
+      "color": "BLUE",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_NORMAL_YELLOW",
+      "name": "黄色泡泡",
+      "bubbleType": "NORMAL",
+      "color": "YELLOW",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_NORMAL_GREEN",
+      "name": "绿色泡泡",
+      "bubbleType": "NORMAL",
+      "color": "GREEN",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_STONE",
+      "name": "石头泡泡",
+      "bubbleType": "OBSTACLE",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": true,
+      "clearMethods": [
+        "BOMB",
+        "FIRE",
+        "SCRIPT",
+        "DETACH_DROP"
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 2
+    },
+    {
+      "bubbleId": "BUBBLE_POISON",
+      "name": "毒液泡泡",
+      "bubbleType": "HAZARD",
+      "color": "DYNAMIC_SOURCE_COLOR",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "spreadRule": {
+        "trigger": "ENEMY_SKILL_ONLY",
+        "maxPoisonBubblesOnBoard": 8
+      },
+      "onOverflowEffects": [
+        {
+          "effectType": "ADD_STATUS_TO_PLAYER",
+          "statusId": "STATUS_POISON_PLAYER",
+          "value": 2,
+          "durationEnemyActions": 2
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 3
+    },
+    {
+      "bubbleId": "BUBBLE_COIN",
+      "name": "金币泡泡",
+      "bubbleType": "REWARD",
+      "color": "DYNAMIC_ACTIVE_COLOR",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "onPlayerClearEffects": [
+        {
+          "effectType": "ADD_GOLD",
+          "value": 2
+        }
+      ],
+      "onOverflowEffects": [
+        {
+          "effectType": "LOSE_REWARD_OBJECT"
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_BOARD_BOMB",
+      "name": "盘面炸弹泡泡",
+      "bubbleType": "SPECIAL",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": true,
+      "clearMethods": [
+        "DIRECT_SPECIAL_HIT",
+        "EXPLOSION",
+        "DETACH_DROP"
+      ],
+      "onPlayerClearEffects": [
+        {
+          "effectType": "CLEAR_RADIUS",
+          "radius": 1,
+          "includeObstacle": true,
+          "includeCore": false
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_RAINBOW",
+      "name": "盘面彩虹泡泡",
+      "bubbleType": "SPECIAL",
+      "color": "RAINBOW",
+      "canMatch": true,
+      "canDetachDrop": true,
+      "matchRule": "ADOPT_TRIGGERING_GROUP_COLOR",
+      "countsForBoardClear": true,
+      "overflowWeight": 1
+    },
+    {
+      "bubbleId": "BUBBLE_BOSS_CORE",
+      "name": "Boss 核心",
+      "bubbleType": "CORE",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": false,
+      "clearMethods": [
+        "DIRECT_SPECIAL_HIT",
+        "ADJACENT_CLEAR_COUNT",
+        "SCRIPT"
+      ],
+      "onPlayerClearEffects": [
+        {
+          "effectType": "ADD_STATUS_TO_ENEMY",
+          "statusId": "STATUS_VULNERABLE_ENEMY",
+          "damageMultiplier": 1.5,
+          "durationPlayerShots": 3
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 5
+    },
+    {
+      "bubbleId": "BUBBLE_SPIDER_EGG",
+      "name": "蜘蛛卵",
+      "bubbleType": "HAZARD",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": true,
+      "countdownShots": 3,
+      "onCountdownEndEffects": [
+        {
+          "effectType": "ADD_BOARD_MODIFIER",
+          "modifierId": "MOD_WEB",
+          "count": 2,
+          "targetRule": "NEAR_EGG_VALID_BUBBLE"
+        },
+        {
+          "effectType": "DESTROY_SELF_NO_REWARD"
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 2
+    },
+    {
+      "bubbleId": "BUBBLE_LAVA",
+      "name": "熔岩泡泡",
+      "bubbleType": "HAZARD",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": true,
+      "countdownShots": 3,
+      "onCountdownEndEffects": [
+        {
+          "effectType": "CLEAR_RADIUS",
+          "radius": 1,
+          "includeObstacle": true,
+          "includeCore": false,
+          "grantRewards": false
+        },
+        {
+          "effectType": "DAMAGE_PLAYER",
+          "value": 6,
+          "damageType": "ENEMY_ATTACK"
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 3
+    },
+    {
+      "bubbleId": "BUBBLE_MIRROR",
+      "name": "镜像泡泡",
+      "bubbleType": "HAZARD",
+      "color": "NONE",
+      "canMatch": false,
+      "canDetachDrop": true,
+      "auraEffects": [
+        {
+          "effectType": "MODIFY_PLAYER_SPECIAL_EFFECT",
+          "multiplier": 0.8
+        }
+      ],
+      "onPlayerClearEffects": [
+        {
+          "effectType": "ADD_STATUS_TO_ENEMY",
+          "statusId": "STATUS_VULNERABLE_ENEMY",
+          "damageMultiplier": 1.5,
+          "durationPlayerShots": 1
+        }
+      ],
+      "countsForBoardClear": true,
+      "overflowWeight": 2
+    }
+  ],
+  "boardModifiers": [
+    {
+      "modifierId": "MOD_WEB",
+      "name": "蛛网",
+      "rules": {
+        "preventsDetachDrop": true,
+        "removedWithHostOnDirectClear": true,
+        "removedByExplosion": true,
+        "canStack": false
+      }
+    },
+    {
+      "modifierId": "MOD_CHAIN",
+      "name": "锁链",
+      "implementationPriority": "P1",
+      "rules": {
+        "hostCannotMatchWhileActive": true,
+        "removeCondition": "ADJACENT_BUBBLE_CLEARED_OR_DIRECT_SPECIAL_HIT",
+        "canStack": false
+      }
+    },
+    {
+      "modifierId": "MOD_ICE_LOCK",
+      "name": "冰封",
+      "implementationPriority": "P1",
+      "rules": {
+        "hostCannotMatchWhileActive": true,
+        "removeCondition": "FIRST_VALID_HIT",
+        "canStack": false
+      }
+    },
+    {
+      "modifierId": "MOD_HIDDEN_COLOR",
+      "name": "隐藏颜色",
+      "implementationPriority": "P0",
+      "rules": {
+        "hideVisualColor": true,
+        "retainLogicalColor": true,
+        "removedAfterPlayerShots": 1,
+        "canStack": false
+      }
+    }
+  ]
+}

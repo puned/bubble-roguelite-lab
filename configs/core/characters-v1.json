@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0",
+  "characters": [
+    {
+      "characterId": "CHAR_FIRE_BOY",
+      "name": "火焰少年",
+      "implementationPriority": "P0",
+      "maxHp": 100,
+      "initialGold": 0,
+      "initialBallBag": [
+        {
+          "ballId": "BALL_RED",
+          "count": 4
+        },
+        {
+          "ballId": "BALL_BLUE",
+          "count": 3
+        },
+        {
+          "ballId": "BALL_YELLOW",
+          "count": 2
+        },
+        {
+          "ballId": "BALL_GREEN",
+          "count": 2
+        },
+        {
+          "ballId": "BALL_FIRE",
+          "count": 1
+        }
+      ],
+      "passiveSkill": {
+        "skillId": "SKILL_FIRE_PASSIVE",
+        "name": "燃烧亲和",
+        "trigger": "ON_MATCH_CLEAR",
+        "conditions": [
+          {
+            "type": "CLEARED_COLOR_COUNT_AT_LEAST",
+            "color": "RED",
+            "value": 3
+          }
+        ],
+        "effects": [
+          {
+            "effectType": "ADD_STATUS_TO_ENEMY",
+            "statusId": "STATUS_BURN_ENEMY",
+            "value": 2,
+            "durationEnemyActions": 2
+          }
+        ],
+        "limits": {
+          "maxTriggersPerShot": 1
+        }
+      },
+      "activeSkill": {
+        "skillId": "SKILL_FIRE_ACTIVE",
+        "name": "装填火焰",
+        "energyCost": 6,
+        "chargeRule": {
+          "type": "ON_CLEAR_BUBBLE",
+          "energyPerBubble": 1
+        },
+        "effects": [
+          {
+            "effectType": "TRANSFORM_CURRENT_BALL",
+            "toBallId": "BALL_FIRE"
+          }
+        ],
+        "consumeShotBudget": false
+      }
+    }
+  ],
+  "p1CharacterArchetypes": [
+    {
+      "characterId": "CHAR_FROST_APPRENTICE",
+      "name": "冰霜学徒",
+      "implementationPriority": "P1",
+      "designSummary": "蓝色控压；主动将当前球变冰冻球并延迟敌人意图 1 发。"
+    },
+    {
+      "characterId": "CHAR_FOREST_GUARDIAN",
+      "name": "森林守护者",
+      "implementationPriority": "P1",
+      "designSummary": "绿色生存；主动获得 12 护盾。"
+    },
+    {
+      "characterId": "CHAR_MECHANIC_APPRENTICE",
+      "name": "机械学徒",
+      "implementationPriority": "P1",
+      "designSummary": "特殊球与爆破；主动将当前球变炸弹球。"
+    }
+  ]
+}
